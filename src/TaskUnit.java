@@ -2,29 +2,26 @@ import java.util.ArrayList;
 
 
 public class TaskUnit {
-    private ArrayList<TaskSubUnit> subUnits;
 
+    private ArrayList<TaskSubUnit> subUnits;
+    private String unitHeader;//test celbol
 
     private int currentSubUnit;//jeloli hogy melyik subunit belsejeben vagyunk savekor
 
-    public TaskUnit() {
+    public TaskUnit(String unitHeader) {
         subUnits = new ArrayList<>();
         currentSubUnit = -1;
-
-        //test
-            subUnits.add(new TaskSubUnit());
-            subUnits.add(new TaskSubUnit());
-        //test
+        this.unitHeader = unitHeader;
     }
 
     public String getHeader(){
-        return "UnitHeader";
+        return unitHeader;
     }
 
     public String saveLine(){
         if (currentSubUnit == -1){  // ha a unit kezdeten vagyunk
             currentSubUnit ++;
-            return "U" + getHeader() + "\n";
+            return "U" + getHeader();
         }
         else if(currentSubUnit == subUnits.size()){
             currentSubUnit = -1;    // visszaallitjuk mintha meg nem vettunk volna ki elemet
@@ -41,5 +38,26 @@ public class TaskUnit {
                 return currentLine;
             }
         }
+    }
+
+    public void loadLine(String line) throws Exception{
+        System.out.println(line + " Task Unit");
+
+        //megnezzuk hogy egy uj betoltendo unit kovetkezik-e
+        if(line.substring(0,1).equals(Finals.SUB_UNIT_INITAL)){
+            //****dobd feldolgozasra
+
+
+            subUnits.add(new TaskSubUnit(line.substring(1)));
+        }
+        else{
+            if(subUnits.isEmpty()){
+                throw new MissingSubUnitException(line);//rowt kaptunk de meg nincs uj subunit
+            }
+            else{
+                subUnits.get(subUnits.size() - 1).loadLine(line);//az utolso unitnak tovabbdobjuk
+            }
+        }
+
     }
 }

@@ -27,7 +27,13 @@ public class Controller {
         Scanner scan = new Scanner(new File(projectName + "_task.txt"));
         while(scan.hasNextLine()){
             String line = scan.nextLine();
-            taskModel.loadLine(line);
+
+            try {
+                taskModel.loadLine(line);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
         scan.close();
     }
@@ -73,5 +79,7 @@ public class Controller {
     }
 
 
-
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
 }
