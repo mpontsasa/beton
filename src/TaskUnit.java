@@ -43,7 +43,7 @@ public class TaskUnit {
     public void loadLine(String line) throws Exception{
         System.out.println(line + " Task Unit");
 
-        //megnezzuk hogy egy uj betoltendo unit kovetkezik-e
+        //megnezzuk hogy egy uj betoltendo subunit kovetkezik-e
         if(line.substring(0,1).equals(Finals.SUB_UNIT_INITAL)){
             //****dobd feldolgozasra
 
